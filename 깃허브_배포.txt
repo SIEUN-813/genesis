@@ -1,0 +1,6 @@
+리파지토리 : genesis
+오리진(리파지토리 웹주소 url) / 깃허브주소
+https://github.com/SIEUN-813/genesis.git
+
+명령어 우분투(윈도우에서 리눅스 명령어)
+gitbash 다운로드 - git-scm.com 접속해서 다운로드

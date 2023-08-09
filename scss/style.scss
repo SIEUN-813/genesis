@@ -1,0 +1,484 @@
+@import url('./fonts.css');
+@import url('./reset.css');
+#wrap {
+    width: 100%;
+    overflow: hidden;
+}
+#wrap #header {
+    z-index: 3;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 69px; 
+    background: #111; 
+    border-bottom: 1px solid #1e1e1e;
+}
+
+#wrap #main {
+    width: 100%;
+    margin-top: 69px;
+}
+#wrap #main #section1 {
+    width: 100%;
+}
+#wrap #main #section1 .slide-container {
+    position: relative;
+    width: 100%;
+    // 슬라이드 전체 선택 안함
+}
+#wrap #main #section1 .slide-container .slide-view {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    overflow: hidden;
+    user-select: none;
+    cursor: grab;
+}
+#wrap #main #section1 .slide-container .page-btn-box {
+    z-index: 2;
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transform: scale(1);
+}
+@media all and (max-width: 1600px) {
+    #wrap #main #section1 .slide-container .page-btn-box {
+        transform: scale(0.8);
+    }
+}
+@media all and (max-width: 1024px) {
+    #wrap #main #section1 .slide-container .page-btn-box {
+        transform: scale(0.7);
+    }
+}
+@media all and (max-width: 500px) {
+    #wrap #main #section1 .slide-container .page-btn-box {
+        transform: scale(0.6);
+    }
+}
+/* 페이지 버튼 */
+#wrap #main #section1 .slide-container .page-btn-box a.page-btn {
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255, 0.7);
+    border: 2px solid rgba(255,255,255, 0);
+    margin: 0 10px;
+    border-radius: 50%;
+    text-indent: -2000px;
+    overflow: hidden;
+    transform: scale(0.7);
+    transition: all 0.3s ease-in-out;
+}
+#wrap #main #section1 .slide-container .page-btn-box a.page-btn.on {
+    background: rgba(255,255,255, 0);
+    border: 2px solid rgba(255,255,255, 1);
+    transform: scale(1.3);
+}
+/* 플레이 버튼 */
+#wrap #main #section1 .slide-container .page-btn-box a.play-btn {
+    border: 12px solid rgba(255,255,255, 1);
+    border-top: 6px solid rgba(255,255,255, 0);
+    border-bottom: 6px solid rgba(255,255,255, 0);
+    border-right: 6px solid rgba(255,255,255, 0);
+    margin-left: 15px;
+    display: none;
+    width: 12px;
+    height: 12px;
+    background: transparent;
+}
+#wrap #main #section1 .slide-container .page-btn-box a.play-btn.on {
+    display: block;
+    cursor: default;
+}
+
+/* 정지 버튼 */
+#wrap #main #section1 .slide-container .page-btn-box a.stop-btn {
+    position: relative;
+    width: 12px;
+    height: 12px;    
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    background: transparent;
+    cursor: default;
+}
+#wrap #main #section1 .slide-container .page-btn-box a.stop-btn.on {
+    display: none;
+}
+/* 정지 버튼 before*/
+/* before는 실제 존재하지않는 실체이기 때문에 반드시 content:'' 명시한다.*/
+#wrap #main #section1 .slide-container .page-btn-box a.stop-btn::before {
+    content:''; /* content:'Before'; */
+    width: 3px;
+    height: 12px;
+    background: rgba(255,255,255, 1);
+}
+/* 정지 버튼 after*/
+#wrap #main #section1 .slide-container .page-btn-box a.stop-btn::after {
+    content: ''; /* content:'After'; */
+    width: 3px;
+    height: 12px;
+    background: rgba(255,255,255, 1);
+}
+#wrap #main #section1 .slide-container .slide-view .slide-wrap {
+    width: calc(100% * 12);
+    display: flex;
+    position: relative;
+    margin-left: -100%; // 1903px
+    // 슬라이드 드래그 터치 시작
+    // 터치 끝 좌표값 안 나옴 => 드래그를 막고있는 터치이벤트 해제
+    pointer-events: none;
+}
+#wrap #main #section1 .slide-container .slide-view .slide-wrap .slide {
+    width: 100%;
+    overflow: hidden;
+    cursor: grab;
+}
+#wrap #main #section1 .slide-container .slide-view .slide-wrap .slide img{
+    width: auto;
+    transform: translateX(-324px);
+}
+
+// 미디어 모든 매체(tv, print, mobile, screen = all)
+// max-width 데스크탑을 개발하고 노트북, 테블릿, 모바일로 해상도가 작아지는 순으로 사용할 때
+//@media all and (max-width: 1903px){}
+// 최소크기에서 시작 min-width 모바일, 테블릿, 노트북, 테스크탑 순으로 해상도가 커질 때
+//@media all and (min-width: 320px){}
+
+// 해상도 1800px 이하에서는 이미지 크기를 너비 100%
+// 자바스크립트에서 반응형을 프로그래밍
+/*
+@media all and (max-width: 1800px){
+    #wrap #main #section1 .slide-container .slide-view .slide-wrap .slide img{
+        width: 100%;
+    }    
+}
+*/
+
+#wrap {
+    width: 100%;
+    overflow: hidden;
+    #main {
+        width: 100%;
+        #section2 {
+            width: 100%;
+            background: #111;
+            padding: 200px 140px; // 미디어쿼리에서 반응형 수정
+            .container {
+                width: 100%;
+                margin: 0 auto;
+                padding-left: 198px; // 미디어쿼리에서 반응형 수정
+                .title {
+                    width: 100%;
+                    color: #fff;
+                    position: relative;
+                    z-index: 2;
+                    h2 {
+                        font-size: 42px;
+                    }
+                    p {
+                        font-size: 16px;
+                        padding: 30px 0;
+                        line-height: 160%;
+                    }
+                    .select-box {
+                        width: 300px;
+                        position: relative;
+                        .select-btn {
+                            width: 100%;
+                            height: 45px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            border-bottom: 1px solid #fff;
+                            span {
+                                font-size: 16px;
+                                color: #fff;
+                                padding-left: 10px;
+                            }
+                            i {
+                                font-size: 20px;
+                                color: #fff;
+                                &.on {
+                                    transform: rotate(180deg);
+                                }
+                            }
+                        }
+                        .sub-menu {
+                            display: none;
+                            position: absolute;
+                            top: 45px;
+                            left: 0;
+                            width: 100%;
+                            &.on {
+                                display: block;
+                            }
+                            li {
+                                border-bottom: 1px solid #222;
+                                width: 100%;
+                                &:last-child {
+                                    border-bottom: 0;
+                                }
+                                a {
+                                    color: #757575;
+                                    font-size: 14px;
+                                    display: flex;
+                                    padding: 0 20px;
+                                    align-items: center;
+                                    width: 100%;
+                                    height: 48px;
+                                    background: #111;
+                                    &:hover {
+                                        color: #fff;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }                
+                @media all and (max-width: 500px) {
+                    .title {
+                        padding: 0 20px;
+                        h2 {
+                            font-size: 32px;
+                        }                        
+                        p {
+                            font-size: 13px;
+                        }
+                        .select-box {
+                            width: 80%;
+                        }
+                    }
+                }
+                .content {
+                    width: 100%;
+                    padding-top: 100px;
+                    position: relative;
+                    z-index: 1;
+                    .slide-container {
+                        width: 100%;
+                        user-select: none;
+                        .slide-view { // 한 화면 너비만 보여줌 => 제네시스 화면은 3개
+                            width: 100%;
+                            overflow: hidden;
+                            .slide-wrap {
+                                width: 100% * 10;
+                                display: flex;
+                                margin-left: -20px; // .gap에 마진 20px 넣었기 때문에 시작점 -20px
+                                // 제이쿼리 애니메이션 하기 전 테스팅
+                                // $cnt: 0; // 0부터 7까지
+                                //transform: translateX(-488.328px * $cnt); => 메인슬라이드에서 transform,transition 사용할 때 필요함
+                                position: relative;
+                                // left: -488.328px * $cnt;
+                                .slide {
+                                    width: 488.328px; // slide.js에서 비율 적용
+                                    height: 431.953px; // slide.js에서 비율 적용
+                                    .gap {
+                                        margin: 0 20px;
+                                        height: 100%;
+                                        .contents {
+                                            background: #151515;
+                                            //width: 488.328px - 40px;
+                                            width: 100%;
+                                            // height: 431.953px; // slide.js에서 비율 적용
+                                            height: 100%;
+                                            //padding: 37px 40px 49px 40px; 
+                                            padding: 8.25% 8.92% 10.93% 8.92%; // 내부넓이(448.328)를 기준으로 비율 계산
+                                            display: flex;
+                                            flex-flow: column nowrap;
+                                            // justify-content: space-between;
+                                            transition: all 0.6s ease-in-out;
+                                            border: 1px solid transparent;
+                                            .top {
+                                                margin: 0 0 auto 0;
+                                                width: 100%;
+                                                height: 65px;
+                                                color: #bbb;
+                                                display: flex;
+                                                flex-flow: column nowrap;
+                                                justify-content: space-around;
+                                                user-select: none;
+                                                h3 {
+                                                    width: 100%; // 상대크기 => 부모의 크기에 따라서 100%, 전체 100% 아님
+                                                    font-size: 30px; // 글자크기는 높이를 말한다.
+                                                    display: flex; 
+                                                    align-items: center;
+                                                    justify-content: space-between; // 양쪽 끝 정렬
+                                                    line-height: 127% //38px;   
+                                                    // 또는 line-height: 38px;
+                                                    // 또는 padding: 4px 0;
+                                                }
+                                                h4 {
+                                                    width: 100%;
+                                                    font-size: 16px;
+                                                    line-height: 125% //20px;
+                                                }
+                                            }
+                                            .middle {
+                                                margin: auto 0 auto 0;
+                                                width: 100%;
+                                                pointer-events: none; // 마우스터치스와이프 사용 가능
+                                                img {
+                                                    width: 100%;
+                                                }
+                                            }
+                                            .bottom {
+                                                margin: auto 0 0 0;
+                                                width: 100%;
+                                                button {
+                                                    width: 100%;
+                                                    height: 56px; 
+                                                    background: #111;
+                                                    border: 1px solid #fff;
+                                                    color: #fff;
+                                                    font-size: 16px;
+                                                    cursor: pointer;
+                                                    position: relative;
+                                                    transition: all 0.6s ease-in-out;
+                                                    span {
+                                                        position: relative;
+                                                        z-index: 2; // position이 없으면 z-index 사용불가
+                                                    }
+                                                    &::before {
+                                                        content: '';
+                                                        position: absolute;
+                                                        z-index: 1;
+                                                        top: 0;
+                                                        left: 0;
+                                                        width: 0;
+                                                        height: 100%;
+                                                        background: #fff;
+                                                        transition: all 0.3s ease-in-out;
+                                                    }
+                                                    &:hover { // 버튼에 마우스 올리면
+                                                        color: #000;
+                                                        font-weight: 600;
+                                                        &::before {
+                                                            width: 100%;
+                                                        }
+                                                    }
+                                                }  
+                                                @media all and (max-width: 1642px) {
+                                                    button {
+                                                        //height: 2.943vw; // vw를 사용하면 넓이를 많이 줄이는 순간에 버튼 높이가 이상해짐
+                                                        height: 50px;
+                                                    }
+                                                }                                           
+                                                @media all and (max-width: 1425px) {
+                                                    button {
+                                                        height: 46px;
+                                                    }
+                                                }                                           
+                                                @media all and (max-width: 1280px) {
+                                                    button {
+                                                        height: 45px;
+                                                    }
+                                                }                                      
+                                            }
+                                            &:hover {
+                                                //background: #222;
+                                                filter: brightness(1);
+                                                border-color: #333;
+                                                .bottom {
+                                                    button {
+                                                        transform: translateY(-15px);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }                        
+                        .page-btn-box {                     
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+                            padding-top: 50px;
+                            a.page-btn {
+                                width: 12px;
+                                height: 12px;
+                                background: rgba(255,255,255, 0.7);
+                                border: 2px solid rgba(255,255,255, 0);
+                                margin: 0 10px;
+                                border-radius: 50%;
+                                text-indent: -2000px;
+                                overflow: hidden;
+                                transform: scale(0.7);
+                                transition: all 0.3s ease-in-out;
+                                &.on {
+                                    background: rgba(255,255,255, 0);
+                                    border: 2px solid rgba(255,255,255, 1);
+                                    transform: scale(1.3);
+                                }
+                            }
+                        }
+                        @media all and (max-width: 500px) {
+                            .page-btn-box {
+                                transform: scale(0.7);
+                            }
+                        }                        
+                    }
+                }
+            }
+            // 1942px 이하에서 padding-left:0 으로 설정
+            @media all and (max-width: 1642px) {
+                .container {
+                    padding-left: 0;
+                }
+            }
+        }
+        @media all and (max-width: 780px) {
+            #section2 {
+                padding: 80px 50px;
+            }
+        }
+        @media all and (max-width: 500px) {
+            #section2 {
+                padding: 80px 0;
+            }
+        }
+    }
+}
+ 
+
+#wrap #main #section3 {
+    width: 100%;
+    height: 769px;
+    background-color: #9c9;
+}
+#wrap #main #section4 {
+    width: 100%;
+    height: 769px;
+    background-color: #c99;
+}
+#wrap #main #section5 {
+    width: 100%;
+    height: 769px;
+    background-color: #99c;
+}
+#wrap #main #section6 {
+    width: 100%;
+    height: 769px;
+    background-color: #9c9;
+}
+#wrap #main #section7 {
+    width: 100%;
+    height: 769px;
+    background-color: #c99;
+}
+#wrap #main #section8 {
+    width: 100%;
+    height: 769px;
+    background-color: #99c;
+}
+
+#wrap #footer {
+    width: 100%;
+    height: 1000px;
+    background-color: #111;
+}
