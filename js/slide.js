@@ -56,8 +56,6 @@
 
             
             // 메인슬라이드 터치스와이프 이벤트
-            // 데스크탑 (마우스) 터치 스와이프 이벤트
-            // 데스크탑 (마우스) 드래그 앤 드롭
             // 마우스다운 => 터치시작
             // 마우스업 => 터치끝
             // 화면의 왼쪽 끝이 0 ~ 화면의 오른쪽 끝이 1920(화면해상도)
@@ -115,6 +113,7 @@
                     //console.log(dragEnd - dragStart);
                     // 메인슬라이드 이동 (드래그)
                     slideWrap.css({left: dragEnd - dragStart}); // 1px단위로 움직여서 animate로 할 필요가 없다 => .css
+                    //console.log(slideWrap.offset().left);
                 }
             });
 
@@ -142,39 +141,25 @@
                 }
             });
 
-            
-            // 테블릿 & 모바일 (핑거링) 터치 스와이프 이벤트
-            // 테블릿 & 모바일 (핑거링) 드래그 앤 드롭
-            // 손가락 터치 이벤트 확인하기
-            /*
+            // 모바일 터치스와이프 & 드래그 앤 드랍 
             slideContainer.on({
                 touchstart(e){
-                    console.log(e);
-                    console.log(e.originalEvent.changedTouches[0].clientX);
-                },
-                touchend(e){
-                    console.log(e.originalEvent.changedTouches[0].clientX);
-                },
-                touchmove(e){
-                    console.log(e.originalEvent.changedTouches[0].clientX);
-                },
-            });
-            */
-            // 테블릿과 모바일에서만 이벤트 동작
-            // originalEvent: TouchEvent,
-            // type: 'touchstart'
-            slideContainer.on({
-                touchstart(e){
-                    winWidth = $(window).innerWidth(); 
-                    sizeX = winWidth / 3;
-                    mouseDown = e.originalEvent.changedTouches[0].clientX;                   
-                    dragStart = e.originalEvent.changedTouches[0].clientX - (slideWrap.offset().left + winWidth);  
-                    mDown = true; 
+                    //console.log(e);
+                    winWidth = $(window).innerWidth(); // mousedown하면 창너비 가져오기 (반응형)
+                    sizeX = winWidth / 2;
+                    mouseDown = e.originalEvent.targetTouches[0].clientX;                    
+                    //console.log(slideWrap.offset().left); // slide-wrap 좌측 좌표값
+                    // 계속 드래그시 슬라이드박스 좌측값 설정
+                    dragStart = e.originalEvent.targetTouches[0].clientX - (slideWrap.offset().left + winWidth);   // .slide-wrap에 margin-left: 100% 해줌 => margin-left: 100% = 1903px
+                                                                                // 그래서 첫번째 슬라이드가 두번째로 선택이 되어서 +1903
+                                                                                // 1903을 알아내기 위해서는 console.log(slideWrap.offset().left); 출력
+                    mDown = true; // 드래그시작
                     slideView.css({cursor: 'grabbing'});
                 },
                 touchend(e){
                     mouseUp = e.originalEvent.changedTouches[0].clientX;
                     if( mouseDown - mouseUp > sizeX) {
+                        //console.log('다음슬라이드');
                         clearInterval(setId);
                         if(!slideWrap.is(':animated')) {
                             nextCount();
@@ -182,26 +167,39 @@
                     }
                     
                     if( mouseDown - mouseUp < -sizeX) {
+                        //console.log('이전슬라이드');
                         clearInterval(setId);
                         if(!slideWrap.is(':animated')) {
                             prevCount();
                         }
                     }
 
+                    // -sizeX 이상이고 sizeX 미만일 경우
                     if (mouseDown - mouseUp >= -sizeX && mouseDown - mouseUp <= sizeX) {
-                        mainSlide(); 
+                        mainSlide(); // 슬라이드 원래대로 제자리 찾아간다
                     }
-                    mDown = false;
+                    mDown = false; // 드래그끝을 알려주는 mouseup상태
                     slideView.css({cursor: 'grab'});
                 },
                 touchmove(e){
+                    // 마우스다운이 없는 상태에서는 슬라이드가 따라다니지 못하게 한다.
+                    // 단, 마우스업이 되면 해제
                     if (!mDown) {
+                    // if (mDown !== true), if (!mDown), if (mDown === false), 같은 뜻
+                    // mDown이 있어야만 드래그 가능
                         return;
                     }
+                    // 드래그시작
+                    // 드래그끝
+                    // 이동거리(마우스무브거리) = 드래그끝.좌표값 - 드래그시작.좌표값
                     dragEnd = e.originalEvent.changedTouches[0].clientX
-                    slideWrap.css({left: dragEnd - dragStart}); 
+                    //console.log(dragEnd - dragStart);
+                    // 메인슬라이드 이동 (드래그)
+                    slideWrap.css({left: dragEnd - dragStart}); // 1px단위로 움직여서 animate로 할 필요가 없다 => .css
+                    //console.log(slideWrap.offset().left);
                 }
             });
+
 
             // 1. 메인슬라이드함수
             function mainSlide(){ 
@@ -281,13 +279,14 @@
             const subMenu = $('#section2 .sub-menu');
             const materialIcons = $('#section2 .select-btn .material-icons');
             const heightRate = 0.884545392; // 넓이에 대한 높이 비율
+            let n = slide.length; // 10
             let cnt = 0;
             let touchStart = null;
             let touchEnd = null;
             let dragStart = null;
             let dragEnd = null;
             let mDown = false; // 마우스다운(드래그시작알림)
-            let sizeX = 100;  // 드래그 길이
+            let sizeX = 300;  // 드래그 길이
             let offsetL =  slideWrap.offset().left;
             let winWidth = $(window).innerWidth();
             let slideWidth;
@@ -306,9 +305,19 @@
                     // 1280 초과에서는 슬라이드 3개 보인다
                     if (winWidth > 1280){
                         slideWidth = (section2container.innerWidth() + 20 + 20)/3;
+                        n = slide.length - 2; // 8 = 10 - 2
+                        // 페이지버튼 갯수 제어 8개인 경우 / 10개인 경우                        
+                        pageBtn.css({display: 'none'}); // 10개 모두 숨김
+                        for (let i = 0; i < n; i++){
+                            pageBtn.eq(i).css({display: 'block'}); // 8개만 보임
+                        }
+                        cnt = 0;
                     }
                     else {
                         slideWidth = (section2container.innerWidth() + 20 + 20)/1;
+                        n = slide.length; // 10
+                        pageBtn.css({display: 'block'}); // 10개 모두 보임                        
+                        cnt = 0;
                     }
                 }
                 else {
@@ -327,7 +336,7 @@
             });
 
 
-            // 데스크탑 터치스와이프 & 드래그앤드롭
+            // 터치스와이프
             // 이벤트는 소문자
             slideContainer.on({
                 mousedown(e){
@@ -381,8 +390,7 @@
                 }
             })
 
-            // 테블릿, 모바일 터치스와이프 & 드래그앤드롭
-            // 이벤트는 소문자
+            // 모바일 터치스와이프 & 드래그앤드롭 이벤트
             slideContainer.on({
                 touchstart(e){
                     slideView.css({ cursor: 'grabbing' });
@@ -412,7 +420,7 @@
                 }
             });
 
-
+            
             // 셀렉트버튼 클릭 이벤트 => 토글이벤트
             // 셀렉트버튼 한 번 클릭하면 서브메뉴 보이고
             // 또 한 번 클릭하면 서브메뉴 숨긴다 
@@ -441,8 +449,8 @@
             // 다음카운트함수
             function nextCount(){
                 cnt++;
-                if(cnt > 7){
-                    cnt = 7
+                if(cnt > n-1){
+                    cnt = n-1
                 };
                 mainSlide();
             }
