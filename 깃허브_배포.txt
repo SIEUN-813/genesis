@@ -4,3 +4,51 @@ https://github.com/SIEUN-813/genesis.git
 
 명령어 우분투(윈도우에서 리눅스 명령어)
 gitbash 다운로드 - git-scm.com 접속해서 다운로드
+터미널 열고 오른쪽 상단에+ 누르고 gitbash 누르기
+
+깃허브(버전관리==형상관리, 협업)
+1. 깃설정
+git init
+
+2. 목록보기 : 숨김목록까지 모두 보기
+ls -la 
+
+3. 환경설정
+웹브라우저(깃허브) 로그인 상태에서 아이디, 본인 이메일 등록
+git config user.name "SIEUN-813"
+git config user.email "pse0813@naver.com"
+(아이디, 이메일 확인하는 방법 : git config user.name 또는 git config user.email)
+
+4. 원격으로 오리진 등록
+http://          일반보안인증서
+https:// s는 ssl 웹보안인증서
+=> 프록시서버등록 또는 오리진헤더코딩을 통해 http https 서로 사용가능하도록
+git remote add origin https://github.com/SIEUN-813/genesis.git
+(확인하는 방법 : git remote -v)
+(오리진 주소가 잘못 기록이 된 경우 수정하는 방법 : git remote remove origin => git remote add origin https://github.com/SIEUN-813/genesis.git)
++ 등록된 정보를 확인하고 싶을 때
+git config --list
+
+5. 스테이징
+git add .
+
+6. 커밋
+git commit -m '제네시스 메인슬라이드'
+
+7. 푸쉬
+git push origin master
+
+8. 인증(인증이 되어야 푸쉬가 완료된다)
+window => 설정 => 자격증명 검색 => window자격증명관리 클릭 => github웹주소 + user.name + user.passward 확인
+(한 컴퓨터에서 여러 사용자가 사용시 추가 등록해서 사용이 가능하다)
+
+9. 깃허브에서 새로고침해서 올라온 파일 확인
+푸쉬한 모든 데이터 확인
+
+10. 깃허브에서 settings 클릭
+
+11. 깃허브에서 좌측 카테고리 메뉴 중 pages 클릭
+
+12. 깃허브 page에서 아래 중간에 Branch => master 클릭 => save 클릭 => 1~3분 대기 후 새로고침
+
+13. 상단에 배포 주소(https://sieun-813.github.io/genesis/)가 뜸, Visit site 클릭하면 배포된 홈페이지 브라우저에 나타남
