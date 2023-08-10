@@ -311,13 +311,14 @@
                         for (let i = 0; i < n; i++){
                             pageBtn.eq(i).css({display: 'block'}); // 8개만 보임
                         }
-                        cnt = 0;
+                        if (cnt >= 7) {
+                            cnt = 7;
+                        }
                     }
                     else {
                         slideWidth = (section2container.innerWidth() + 20 + 20)/1;
                         n = slide.length; // 10
-                        pageBtn.css({display: 'block'}); // 10개 모두 보임                        
-                        cnt = 0;
+                        pageBtn.css({display: 'block'}); // 10개 모두 보임 
                     }
                 }
                 else {
