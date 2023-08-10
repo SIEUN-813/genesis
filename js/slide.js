@@ -279,7 +279,7 @@
             const subMenu = $('#section2 .sub-menu');
             const materialIcons = $('#section2 .select-btn .material-icons');
             const heightRate = 0.884545392; // 넓이에 대한 높이 비율
-            let n = slide.length; // 10
+            let n = slide.length - 2; 
             let cnt = 0;
             let touchStart = null;
             let touchEnd = null;
@@ -311,8 +311,8 @@
                         for (let i = 0; i < n; i++){
                             pageBtn.eq(i).css({display: 'block'}); // 8개만 보임
                         }
-                        if (cnt >= 7) {
-                            cnt = 7;
+                        if (cnt >= n-1) { // 7
+                            cnt = n-1; // 7
                         }
                     }
                     else {
@@ -322,7 +322,11 @@
                     }
                 }
                 else {
-                    slideWidth = (section2container.innerWidth() - 198 + (20 + 20))/3;
+                    slideWidth = (section2container.innerWidth() - 198 + (20 + 20))/3;                     
+                    pageBtn.css({display: 'none'}); // 10개 모두 숨김
+                    for (let i = 0; i < n; i++){
+                        pageBtn.eq(i).css({display: 'block'}); // 8개만 보임
+                    }
                 }
                 //let slideWidth = (section2container.innerWidth() - 198 + 20 + 20)/3;
                 slideWrap.css({width: slideWidth * 10});
