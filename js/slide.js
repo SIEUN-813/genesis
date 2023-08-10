@@ -166,7 +166,7 @@
             slideContainer.on({
                 touchstart(e){
                     winWidth = $(window).innerWidth(); 
-                    sizeX = winWidth / 2;
+                    sizeX = winWidth / 3;
                     mouseDown = e.originalEvent.changedTouches[0].clientX;                   
                     dragStart = e.originalEvent.changedTouches[0].clientX - (slideWrap.offset().left + winWidth);  
                     mDown = true; 
@@ -231,7 +231,7 @@
             function autoTimer(){
                 setId = setInterval(nextCount, 7000);
             }
-            //autoTimer();
+            autoTimer();
             // 4. 페이지이벤트함수
             function pageEvent(){
                 pageBtn.removeClass('on');
@@ -287,7 +287,7 @@
             let dragStart = null;
             let dragEnd = null;
             let mDown = false; // 마우스다운(드래그시작알림)
-            let sizeX = 300;  // 드래그 길이
+            let sizeX = 100;  // 드래그 길이
             let offsetL =  slideWrap.offset().left;
             let winWidth = $(window).innerWidth();
             let slideWidth;
